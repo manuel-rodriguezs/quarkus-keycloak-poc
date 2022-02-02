@@ -1,9 +1,9 @@
 function init() {
-    let token = getToken();
+    let token = getTokenJsonPayload();
     if (token !== undefined && token !== '') {
         document.getElementById("logged").style.display = "inline";
         document.getElementById("name").innerHTML = token.name;
-        document.getElementById("token").innerHTML = JSON.stringify(token);
+        showTokenPayload();
     } else {
         document.getElementById("notlogged").style.display = "inline";
     }
@@ -24,7 +24,11 @@ function popupwindow(url, title, w, h) {
 }
 
 function getToken() {
-    let token = getCookie("token");
+    return getCookie("token");
+}
+
+function getTokenJsonPayload() {
+    let token = getToken();
     if (token === undefined || token === '') {
         return '';
     }
@@ -55,4 +59,30 @@ function parseJwt(token) {
     }).join(''));
 
     return JSON.parse(jsonPayload);
+}
+
+function showTokenPayload() {
+    document.getElementById("token").innerHTML = JSON.stringify(getTokenJsonPayload());
+}
+
+function showPlainToken() {
+    document.getElementById("token").innerHTML = JSON.stringify(getToken());
+}
+
+function getSecuredArea() {
+    ajaxRequestAndShowResponse('/secured/permit-all', 'responseSecured');
+}
+
+function getRestrictedArea() {
+    ajaxRequestAndShowResponse('/secured/roles-allowed', 'responseRestricted');
+}
+
+function ajaxRequestAndShowResponse(url, elementId) {
+    let http_request = new XMLHttpRequest();
+    http_request.open('GET', url, true);
+    http_request.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    http_request.send();
+    http_request.onreadystatechange = () => {
+        document.getElementById(elementId).innerHTML = 'Status: ' + http_request.status + ' ' + http_request.statusText + ' ' + http_request.responseText;
+    }
 }

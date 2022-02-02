@@ -177,9 +177,33 @@
         <p class="lead">Keycloack and Quarkus proof of concept</p>
 
         <div id="logged" style="display:none">
-            <h2>Hi! <span id="name"></span></h2>
+            <h2>Hi <span id="name"></span>!</h2>
             <p>Here is your token:</p>
-            <p><code id="token"></code>
+            <div class="provided-code">
+                <p>
+                    <button onclick="showTokenPayload()">JSON Payload</button>
+                    <button onclick="showPlainToken()">Plain base64</button>
+                </p>
+                <p><code id="token"></code>
+            </div>
+            <p>
+                We can try access to a secured area with no authorization requirements
+            </p>
+            <p>
+                <button onclick="getSecuredArea()">Try access</button>
+            </p>
+            <div class="provided-code">
+                <p><code id="responseSecured"></code></p>
+            </div>
+            <p>
+                Also we can try access to a secured area with User or Admin role required
+            </p>
+            <p>
+                <button onclick="getRestrictedArea()">Try access</button>
+            </p>
+            <div class="provided-code">
+                <p><code id="responseRestricted"></code></p>
+            </div>
             <p>
                 <button onclick="logout()">Log-out</button>
             </p>
