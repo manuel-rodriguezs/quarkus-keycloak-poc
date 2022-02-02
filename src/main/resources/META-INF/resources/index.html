@@ -104,9 +104,69 @@
         .provided-code h3 {
             font-weight: 200;
         }
+
+
+        /* CSS */
+        button {
+            appearance: none;
+            background-color: #FAFBFC;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #24292E;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            list-style: none;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            word-wrap: break-word;
+        }
+
+        button:hover {
+            background-color: #F3F4F6;
+            text-decoration: none;
+            transition-duration: 0.1s;
+        }
+
+        button:disabled {
+            background-color: #FAFBFC;
+            border-color: rgba(27, 31, 35, 0.15);
+            color: #959DA5;
+            cursor: default;
+        }
+
+        button:active {
+            background-color: #EDEFF2;
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+        }
+
+        button:focus {
+            outline: 1px transparent;
+        }
+
+        button:before {
+            display: none;
+        }
+
+        button:-webkit-details-marker {
+            display: none;
+        }
     </style>
+    <script src="index.js"></script>
 </head>
-<body>
+<body onload="init()">
 
 <div class="banner lead">
     Your new Cloud-Native application is ready!
@@ -114,57 +174,23 @@
 
 <div class="container">
     <div class="left-column">
-        <p class="lead"> Congratulations, you have created a new Quarkus cloud application.</p>
+        <p class="lead">Keycloack and Quarkus proof of concept</p>
 
-        <h2>What is this page?</h2>
-
-        <p>This page is served by Quarkus. The source is in
-            <code>src/main/resources/META-INF/resources/index.html</code>.</p>
-
-        <h2>What are your next steps?</h2>
-
-        <p>If not already done, run the application in <em>dev mode</em> using: <code>./mvnw compile quarkus:dev</code>.
-        </p>
-        <ul>
-            <li>Your static assets are located in <code>src/main/resources/META-INF/resources</code>.</li>
-            <li>Configure your application in <code>src/main/resources/application.properties</code>.</li>
-            <li>Quarkus now ships with a <a href="/q/dev/">Dev UI</a> (available in dev mode only)</li>
-            <li>Play with the provided code located in <code>src/main/java</code>:</li>
-        </ul>
-                <div class="provided-code">
-            <h3>RESTEasy JAX-RS</h3>
-            <p>Easily start your RESTful Web Services</p>
-            <p><code>@Path: <a href="/hello" class="path-link" target="_blank">/hello</a></code></p>
-            <p><a href="https://quarkus.io/guides/getting-started#the-jax-rs-resources" class="guide-link" target="_blank">Related guide section...</a></p>
+        <div id="logged" style="display:none">
+            <h2>Hi! <span id="name"></span></h2>
+            <p>Here is your token:</p>
+            <p><code id="token"></code>
+            <p>
+                <button onclick="logout()">Log-out</button>
+            </p>
         </div>
 
-    </div>
-    <div class="right-column">
-        <div class="right-section">
-            <h3>Application</h3>
-            <ul>
-                <li>GroupId: <code>org.acme</code></li>
-                <li>ArtifactId: <code>quarkus-keycloak-poc</code></li>
-                <li>Version: <code>1.0.0-SNAPSHOT</code></li>
-                <li>Quarkus Version: <code>2.6.3.Final</code></li>
-            </ul>
-        </div>
-        <div class="right-section">
-            <h3>Do you like Quarkus?</h3>
-            <ul>
-                <li>Go give it a star on <a href="https://github.com/quarkusio/quarkus">GitHub</a>.</li>
-            </ul>
-        </div>
-        <div class="right-section">
-            <h3>More reading</h3>
-            <ul>
-                <li><a href="https://quarkus.io/guides/maven-tooling" target="_blank">Setup your IDE</a></li>
-                <li><a href="https://quarkus.io/guides/getting-started" target="_blank">Getting started</a></li>
-                <li><a href="https://quarkus.io/guides/" target="_blank">All guides</a></li>
-                <li><a href="https://quarkus.io" target="_blank">Quarkus Web Site</a></li>
-            </ul>
+        <div id="notlogged" style="display:none">
+            <h2>Let's try an external OAuth login</h2>
+            <p>
+                <button onclick="login()">Log-in</button>
+            </p>
         </div>
     </div>
-</div>
 </body>
 </html>
