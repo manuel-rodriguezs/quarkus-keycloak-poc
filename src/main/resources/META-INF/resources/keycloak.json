@@ -2,7 +2,7 @@
   "realm": "tulotero",
   "auth-server-url": "http://localhost:8080/auth/",
   "ssl-required": "none",
-  "resource": "tulotero-clientes-webui",
+  "resource": "tulotero-clients-web-ui",
   "public-client": true,
   "confidential-port": 0
 }
